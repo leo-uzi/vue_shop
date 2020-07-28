@@ -5,6 +5,8 @@ import Login from '../components/login.vue'
 import Home from '../components/home.vue'
 import Welcome from '../components/welcome'
 import Users from '../components/users/users'
+import Rights from '../components/rights/rights'
+import Roles from '../components/rights/roles'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -18,12 +20,13 @@ const router = new VueRouter({
       /* welcome子路由 */
       children: [
         { path: '/welcome', component: Welcome },
-        { path: '/users', component: Users }
+        { path: '/users', component: Users },
+        { path: '/rights', component: Rights },
+        { path: '/roles', component: Roles }
       ]
     }
   ]
 })
-
 /* 设置路由导航守卫来控制访问权限 */
 router.beforeEach((to, from, next) => {
   if (to.path === '/login') return next()

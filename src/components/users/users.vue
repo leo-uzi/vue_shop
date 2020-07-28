@@ -68,7 +68,7 @@
               <el-button type="danger" icon="el-icon-delete" size="mini" @click="showRemove(scope.row.id)"></el-button>
             </el-tooltip>
             <el-tooltip effect="dark" content="分配角色" placement="top-end" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="showSetRoleDialog(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -122,6 +122,32 @@
         <el-button type="primary" @click="editeDialogCommit">确 定</el-button>
         </span>
       </el-dialog>
+      <!--分配角色dialog-->
+      <el-dialog
+        title="分配角色"
+        :visible.sync="setRoleDialogVisible"
+        width="50%"
+        @close="setRoleClose">
+        <!--主体区域-->
+          <p>姓名：{{setRole.username}}</p>
+          <p>角色：{{setRole.role_name}}</p>
+          <div>
+            <p>分配角色：</p>
+            <el-select v-model="setRoleId" placeholder="请选择">
+              <el-option
+                v-for="item in setRoleList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </div>
+        <!--尾部按钮区域-->
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRoleCommit">确 定</el-button>
+        </span>
+      </el-dialog>
       <!--分页器-->
       <el-pagination
         @size-change="handleSizeChange"
@@ -168,6 +194,10 @@ export default {
       total: 0,
       adduserDialog: false,
       editeDialog: false,
+      setRoleDialogVisible: false,
+      setRoleList: [],
+      setRole: {},
+      setRoleId: '',
       adduserForm: {
         username: '',
         password: '',
@@ -359,6 +389,7 @@ export default {
         this.getUserList()
       })
     },
+    /* 删除用户功能实现 */
     async showRemove (id) {
       const removeMsg = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -370,11 +401,38 @@ export default {
       if (res.meta.status !== 200) return this.$message({ type: 'error', message: res.meta.msg })
       this.$message({ type: 'success', message: res.meta.msg })
       this.getUserList()
+    },
+    /* 分配角色dialog */
+    async showSetRoleDialog (role) {
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) return this.$message.error('获取数据出错')
+      this.setRoleList = res.data
+      this.setRole = role
+      this.setRoleDialogVisible = true
+    },
+    /* 关闭分配角色dialog后重置内容 */
+    setRoleClose () {
+      this.setRoleId = ''
+      this.setRoleList = []
+    },
+    /* 分配角色功能实现 */
+    async setRoleCommit () {
+      if (!this.setRoleId) return this.$message.error('未选择角色')
+      const { data: res } = await this.$http.put(`users/${this.setRole.id}/role`, {
+        rid: this.setRoleId
+      })
+      if (res.meta.status !== 200) return this.$message.error('设置角色失败')
+      this.getUserList()
+      this.$message.success('设置角色成功')
+      this.setRoleDialogVisible = false
     }
   }
 }
 </script>
 
 <style scoped>
-
+p{
+  font-size: 16px;
+  line-height: 30px;
+}
 </style>
