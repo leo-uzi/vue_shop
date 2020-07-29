@@ -20,3 +20,10 @@ body,
 .el-pagination{
     margin-top: 15px;
 }
+.el-cascader-menu{
+    height: 300px;
+}
+.el-dialog{
+    min-width: 500px;
+    max-width: 800px;
+}
