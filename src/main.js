@@ -8,7 +8,7 @@ import './assets/fonts/iconfont.css'
 import tableTree from 'vue-table-with-tree-grid'
 /* 配置axios导入Vue */
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://api.zreai.com:606/api/private/v1/'
 /* 为后续调用api增加请求头中的'Authorization'字段(值为token) */
 axios.interceptors.request.use(config => {
   config.headers.authorization = window.sessionStorage.getItem('token')
@@ -23,3 +23,4 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+// 'http://api.zreai.com:606/api/private/v1/'
