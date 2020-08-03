@@ -27,3 +27,9 @@ body,
     min-width: 500px;
     max-width: 800px;
 }
+.el-tabs--left .el-tabs__header.is-left{
+    margin-right: 50px!important;
+}
+.ql-editor{
+    min-height: 300px;
+}
