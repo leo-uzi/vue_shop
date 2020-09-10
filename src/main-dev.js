@@ -12,12 +12,22 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
+/* 导入nprogress进度条插件 */
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 /* 配置axios导入Vue */
 import axios from 'axios'
-axios.defaults.baseURL = 'http://api.zreai.com:606/api/private/v1/'
+axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
 /* 为后续调用api增加请求头中的'Authorization'字段(值为token) */
+/* 请求拦截器 */
 axios.interceptors.request.use(config => {
   config.headers.authorization = window.sessionStorage.getItem('token')
+  NProgress.start()
+  return config
+})
+/* 响应拦截器 */
+axios.interceptors.response.use(config => {
+  NProgress.done()
   return config
 })
 /* 为Vue导入axios方法(命名为$http) */

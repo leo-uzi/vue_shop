@@ -5,7 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title><%= htmlWebpackPlugin.options.isProd ? '' : 'dev -' %>电商后台系统</title>
+    <% if(htmlWebpackPlugin.options.isProd){ %>
+    <!--外部CDN样式表-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0-dev.4/quill.bubble.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0-dev.4/quill.core.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0-dev.4/quill.snow.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css" rel="stylesheet">
+    <!--外部CDN JS文件-->
+
+    <script src="https://cdn.staticfile.org/vue/2.5.22/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.20.0-0/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-router/3.2.0/vue-router.min.js"></script>
+    <script src="https://cdn.staticfile.org/lodash.js/4.17.19/lodash.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.1.0/echarts.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/quill/2.0.0-dev.4/quill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-quill-editor@3.0.6/dist/vue-quill-editor.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
+    <% } %>
   </head>
   <body>
     <noscript>
